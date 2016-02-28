@@ -61,6 +61,8 @@ end
 
 puts "----------------------------------"
 puts "Lets look at classes"
+puts "notice the usage of the == without the if statement and the function returns true or false,"
+puts "ruby also has the concept of implicity return, it will return the last statement by default"
 
 class Word < String
 	def palindrome? (string)
@@ -68,9 +70,22 @@ class Word < String
 	end
 end 
 
-aWord = Word.new
+aWord = Word.new 
 puts aWord.palindrome?("level")
 
+puts "----------------------------------"
+puts "Lets look at your own class"
+
+require "./class_example"
+
+exampleUser = User.new
+puts exampleUser;
+exampleUser.name = "Stantheman";
+exampleUser.email = "Stan@test.com";
+puts exampleUser;
+puts exampleUser.name;
+puts exampleUser.formatted_email;
+# exampleUser.hello = "test"
 
 
 

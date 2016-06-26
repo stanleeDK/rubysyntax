@@ -1,93 +1,149 @@
-puts "test";
-puts "----------------------------------"
-a = ["Barry","Ronaldo","Bale"]
+# -- Conventions --
+# Local variables, method parameters, and method names should all start with a lowercase letter2 or an underscore. 
+# Global variables are prefixed with a dollar sign ($), and instance variables begin with an “at” sign (@). 
+# Class variables start with two “at” signs (@@).
+# Finally, class names, module names, and constants must start with an uppercase letter. 
 
-print a;
-puts a;
-
-if a.empty?
-	puts "empty!"
-else
-	puts "not empty"
-end
-
-if a.include?("Barry")
-	puts "Testing the include? function: " + a[0]
-end 
-
-puts "----------------------------------"
-a.shuffle
-puts a.to_s + " testing shuffle function, note it shuffles a copy"
-
-a.shuffle!
-puts a.to_s + " testing shuffle! function, note it doesn't shuffle a copy, if shuffles the actual array held at that memory address"
+puts "-----------------Defining a method in Ruby-----------------"
 
 
-print a[0..1].to_s + "example of ranges, where you select a sub portion of the array\n"
+	def string_variable_in_method(param1)
+		puts "example of string variable #{param1}"
+	end 
 
-puts "Now an example of 'blocks', it seems like an iterator which can go through a data structure and perform operations on each item"
-a.each {|i| puts i + " sucks"}
-
-puts "----------------------------------"
-puts "let's look at a hashtable in ruby"
-exampleHT = {}
-exampleHT["first"] ="Hello"
-puts exampleHT
-
-exampleHT = {"second" => "goodbye", "third" => "farvel"}
-puts exampleHT
-
-puts "----------------------------------"
-puts "lets look at symbols which look like strings prefixed with a colon and seem to be more efficient ways to use hashtable keys"
-exampleHT2 = {:second=>"goodbye",:third=>"farvel"};
-puts exampleHT2[:second] 
-print "look at how we use symbols to access hashtable values\n"
+	string_variable_in_method("I am a parameter")
 
 
-puts "----------------------------------"
-puts "example of how you can deep compare hash tables??"
-if exampleHT == exampleHT2
-	puts "true!"
-else
-	puts "false"
-end
+puts "\n\n\n\n-----------------Arrays in Ruby-----------------"
 
-puts "----------------------------------"
-puts "lets look through how you can iterate through a hashtable "
-exampleHT2.each do |key,value|
-	puts key.to_s + " " + value.to_s 
-end 
+# -- Arrays in Ruby -- 
+	a = ["Barry","Ronaldo","Bale"]
 
-
-puts "----------------------------------"
-puts "Lets look at classes"
-puts "notice the usage of the == without the if statement and the function returns true or false,"
-puts "ruby also has the concept of implicity return, it will return the last statement by default"
-
-class Word < String
-	def palindrome? (string)
-		string == string.reverse
+	if a.empty?
+		puts "empty!"
+	else
+		puts "This array is not empty! #{a}"
 	end
-end 
 
-aWord = Word.new 
-puts aWord.palindrome?("level")
+	if a.include?("Barry")
+		puts "Testing the include? function and it does include:" + a[0]
+	end 
 
-puts "----------------------------------"
-puts "Lets look at your own class"
+	recep = ["Euro2016","1.1", {name: false}];
+	puts recep[2]
+	puts recep[1]
 
-require "./class_example"
+puts "\n\n\n\n-----------------Hashtables in Ruby-----------------"
 
-exampleUser = User.new
-puts exampleUser;
-exampleUser.name = "Stantheman";
-exampleUser.email = "Stan@test.com";
-puts exampleUser;
-puts exampleUser.name;
-puts exampleUser.formatted_email;
-# exampleUser.hello = "test"
+# -- Hashtable sin Ruby -- 
+	exampleHT = {}
+	exampleHT["first"] ="Hello"
+	#puts exampleHT
+
+	exampleHT = {
+		"second" => "goodbye", 
+		"third" => "farvel"
+	}
+	
+	#nill is the null of C. If something doesn't exist then it's nil
+	if exampleHT[3] == nil
+		puts "index 3 doesn't exisit!"
+	end 
+
+puts "\n\n\n\n-----------------Symbols in Ruby-----------------"
+# Symbols are simply constant names that you don’t have to predeclare and that are 
+# guaranteed to be unique. A symbol literal starts with a colon and is normally followed by some kind of name:
+
+# Here are three different ways to populate a hashtable. Note you can use keys. 
+# The third method still uses keys, but they jacked the popular javascript notation to confuse you. 
+
+	exampleHT1 = {
+		"second" => "goodbye", 
+		"third" => "farvel"
+	}
+
+	exampleHT2 = {
+		:second => "goodbye",
+		:third => "farvel"
+	};
+	exampleHT3 = {
+		second: "goodbye",
+		third: "farvel"
+	};
+	
 
 
+
+puts "\n\n\n\n-----------------Defining a method in Ruby-----------------"
+
+	def test (param1, param2)
+		puts param1 
+		puts param2
+	end 
+
+	test("hello","world")
+
+
+puts "\n\n\n\n-----Exploring all the different ways you can call a method which accepts an object ---------"
+# Exploring all the different ways you can call a method which accepts an object
+# Note how you can define objects as the last parameter (BMW1-4) instead of passing in finished objects.
+# Note all the different ways you can define objects (aka hashes)
+
+
+	car1 = {:make => "BMW-original"}
+	car2 = {make: "Mercedes"}
+	
+	car3 = {};
+	car3[:make] = "Audi"
+
+
+	test car1, car2
+	test(car1, car2)
+	test(car1, car3)
+
+	puts "\n"
+
+	test(car1, {:make => "BMW1"}) #with brackets, curly braces and regular symbol notation 
+	test car1, {:make => "BMW2"} # no brackets 
+	test car1, :make => "BMW3" # no brackets and no braces 
+
+	test car1, make: "BMW4" #same as above, but using the new symbol notation jacked from javascript 
+	test car1, {make: "BMW5"}
+	test(car1, {make: "BMW6"})
+
+
+	#validates(:name, {:presence=>true})
+	#validates(:name, {presence: true})
+	#validates :name, presence: true
+
+
+
+
+
+puts "\n\n\n\n-----------------Blocks in Ruby-----------------"
+# -- Blocks -- 
+# Are function pointers. You can define some code and variables (with values?), which you pass into a method. 
+# Perhaps closures are a similar concept  
+
+	def example_of_blocks
+		puts "Beginning of the method"
+		yield #example of the block code being invoked inside the method 
+		yield #invoking it twice as an example 
+		puts "Method finishing" 
+	end 
+	example_of_blocks() {puts "invoking block code passed to method"}
+
+#--------
+
+
+	exampleHT2.each {
+		|i| 
+		puts i.to_s + " scores goals - example of blocks as an iterator"
+	}
+
+	exampleHT2.each do |key,value|
+		puts key.to_s + " example of blocks iterator " + value.to_s 
+	end 
 
 
 
